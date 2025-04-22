@@ -1,0 +1,21 @@
+# docker-compose.yml
+version: '3'
+services:
+  fastapi:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+  elasticsearch:
+    image: elasticsearch:7.17.10
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+  fuseki:
+    image: stain/jena-fuseki
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./rdf:/fuseki/config
